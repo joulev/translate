@@ -8,13 +8,20 @@ import Markdown from "./_markdown";
 
 export default function Completion() {
   const [content, setContent] = useState("");
-  const [test, setTest] = useState("hello world");
+  const [from, setFrom] = useState("Japanese");
+  const [to, setTo] = useState("English");
+  const [context, setContext] = useState("");
   const { complete, completion, isLoading } = useCompletion({
     api: "/completion",
-    body: { test },
+    body: { from, to, context },
   });
+  const onChangeHandlerGenerator =
+    (setter: (value: string) => void) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setter(e.target.value);
+    };
   return (
-    <div className="grid h-screen w-screen grid-cols-1 grid-rows-2 gap-6 p-6 lg:grid-cols-2 lg:grid-rows-1">
+    <div className="grid h-screen w-screen grid-cols-2 gap-6 p-6">
       <form
         className="flex flex-col gap-6"
         onSubmit={async e => {
@@ -27,12 +34,29 @@ export default function Completion() {
           placeholder="Enter your text..."
           required
           value={content}
-          onChange={e => setContent(e.target.value)}
+          onChange={onChangeHandlerGenerator(setContent)}
         />
-        <input
-          className="border px-6 py-2 outline-none border-daw-main-300 bg-daw-main-50"
-          value={test}
-          onChange={e => setTest(e.target.value)}
+        <div className="grid grid-cols-2 gap-6">
+          <input
+            className="border px-6 py-2 outline-none border-daw-main-300 bg-daw-main-50"
+            placeholder="Japanese"
+            type="text"
+            value={from}
+            onChange={onChangeHandlerGenerator(setFrom)}
+          />
+          <input
+            className="border px-6 py-2 outline-none border-daw-main-300 bg-daw-main-50"
+            placeholder="English"
+            type="text"
+            value={to}
+            onChange={onChangeHandlerGenerator(setTo)}
+          />
+        </div>
+        <textarea
+          className="prose prose-zinc w-full max-w-full flex-grow border p-6 outline-none border-daw-main-300 bg-daw-main-50 dark:prose-invert"
+          placeholder="Enter context..."
+          value={context}
+          onChange={onChangeHandlerGenerator(setContext)}
         />
         <button
           className="px-6 py-2 bg-daw-main-950 text-daw-main-50 hover:bg-daw-main-800 disabled:cursor-wait disabled:bg-daw-main-100 disabled:text-daw-main-500"
