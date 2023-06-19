@@ -10,7 +10,7 @@ export const runtime = "edge";
 
 const apiConfig = new Configuration({ apiKey: env.OPENAI_API_KEY });
 const openai = new OpenAIApi(apiConfig);
-const schema = z.object({ prompt: z.string() });
+const schema = z.object({ prompt: z.string(), test: z.string() });
 
 function buildPrompt(text: string, fromLanguage: string, toLanguage: string) {
   return `
@@ -34,7 +34,8 @@ ${toLanguage}:
 `.trim();
 }
 
-export const POST = withRouteValidation(schema, async (_, { prompt }) => {
+export const POST = withRouteValidation(schema, async (_, { prompt, test }) => {
+  console.log(test);
   const response = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
     stream: true,

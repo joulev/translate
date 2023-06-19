@@ -8,7 +8,11 @@ import Markdown from "./_markdown";
 
 export default function Completion() {
   const [content, setContent] = useState("");
-  const { complete, completion, isLoading } = useCompletion({ api: "/completion" });
+  const [test, setTest] = useState("hello world");
+  const { complete, completion, isLoading } = useCompletion({
+    api: "/completion",
+    body: { test },
+  });
   return (
     <div className="grid h-screen w-screen grid-cols-1 grid-rows-2 gap-6 p-6 lg:grid-cols-2 lg:grid-rows-1">
       <form
@@ -24,6 +28,11 @@ export default function Completion() {
           required
           value={content}
           onChange={e => setContent(e.target.value)}
+        />
+        <input
+          className="border px-6 py-2 outline-none border-daw-main-300 bg-daw-main-50"
+          value={test}
+          onChange={e => setTest(e.target.value)}
         />
         <button
           className="px-6 py-2 bg-daw-main-950 text-daw-main-50 hover:bg-daw-main-800 disabled:cursor-wait disabled:bg-daw-main-100 disabled:text-daw-main-500"
