@@ -1,3 +1,4 @@
+import tailwindTypography from "@tailwindcss/typography";
 import tailwindDarkAware from "tailwind-dark-aware";
 import { Config } from "tailwindcss";
 import colors from "tailwindcss/colors";
@@ -9,5 +10,5 @@ export default {
       colors: { main: colors.zinc },
     },
   },
-  plugins: [tailwindDarkAware],
+  plugins: [tailwindDarkAware, tailwindTypography],
 } satisfies Config;

@@ -1,3 +1,5 @@
-export default function Home() {
-  return <div>Hello world</div>;
+import Completion from "./_completion";
+
+export default function Page() {
+  return <Completion />;
 }
