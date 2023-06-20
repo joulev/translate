@@ -90,6 +90,8 @@ The translation to Vietnamese of the same text is good as well. Definitely not "
 
 At least the translation is better than Google Translate 🙄 and at least if I buy raw Japanese light novels now, I can be reasonably sure I can understand _at least most of them_ using this translator.
 
+For languages other than Vietnamese and English, I can't comment on the quality since I don't speak those languages, but the demo app still has options to translate to a few more languages in case someone might need.
+
 ## Try it
 
 ### Deployed app
