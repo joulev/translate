@@ -49,7 +49,7 @@ export default function Completion() {
             Translate
           </button>
         </div>
-        <div className="flex-grow overflow-y-auto border p-6 border-daw-main-300">
+        <div className="flex-grow overflow-y-auto border px-6 py-2 border-daw-main-300">
           <Markdown
             className={clsx(
               "prose prose-zinc dark:prose-invert",

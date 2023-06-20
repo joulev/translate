@@ -16,7 +16,7 @@ export default function Textarea({
   return (
     <textarea
       className={clsx(
-        "prose prose-zinc w-full max-w-full flex-grow resize-none border p-6 outline-none border-daw-main-300 bg-daw-main-50 dark:prose-invert",
+        "prose prose-zinc w-full max-w-full flex-grow resize-none border px-6 py-2 outline-none border-daw-main-300 bg-daw-main-50 dark:prose-invert",
         className
       )}
       placeholder={placeholder}
