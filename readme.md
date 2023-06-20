@@ -1,8 +1,6 @@
 # translate
 
-https://aitl.joulev.dev
-
----
+![Demo](./demo.png)
 
 This is my first somewhat serious attempt of prompt engineering, which is an app that can be used to translate light novels.
 
@@ -10,7 +8,7 @@ Although we don't provide any examples for the model to understand ([zero-shot p
 
 <details>
 <summary>Example translation of "The Angel Next Door Spoils Me Rotten"</summary>
-  
+
 ### Original text
 
 The very first lines of the light novel, volume 1, in Japanese.
