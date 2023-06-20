@@ -33,6 +33,8 @@ DO NOT change the meaning of any part of the text, or omit any part of the text.
 
 DO NOT change any line breaks or paragraph breaks. If the paragraph seems too short and you want to join it with the next paragraph, DO NOT do that. Two paragraphs in the unknown language MUST be translated to two separate paragraphs in ${toLanguage}.
 
+DO NOT add the closing "================================================" line to your reply message.
+
 The context of the light novel, before the excerpt, is as follows:
 ================================================
 ${context || "No context was provided."}

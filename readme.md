@@ -19,7 +19,7 @@ The very first lines of the light novel, volume 1, in Japanese.
 
 ### Translated content
 
-Original text in Japanese &copy; 佐伯さん, はねこと, SB Creative Corp. English text are completely AI translation.
+Original text in Japanese &copy; 佐伯さん, SB Creative Corp. English text are completely AI translation.
 
 > "...What are you doing?"
 >

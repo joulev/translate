@@ -48,13 +48,30 @@ export default function Completion() {
           }
         }}
       >
-        <div className="grid grid-rows-2 gap-6">
-          <Textarea get={content} set={setContent} placeholder="Enter your text..." required />
-          <Textarea
-            get={context}
-            set={setContext}
-            placeholder="Enter the context of the story at this point."
-          />
+        <div className="flex flex-col gap-6">
+          <Button
+            disabled={isLoading}
+            variant="secondary"
+            type="button"
+            onClick={async () => {
+              const { content, context } = await import("./_sample");
+              setContent(content);
+              setContext(context);
+              alert(
+                `Preset loaded: Excerpt from "Wandering Witch: The Journey of Elaina", Volume 9, Chapter 3. © 白石定規, SB Creative Corp. Short excerpt used for educational research purposes. For readers, please buy the book to read the full story.`
+              );
+            }}
+          >
+            Use a preset
+          </Button>
+          <div className="grid flex-grow grid-rows-2 gap-6">
+            <Textarea get={content} set={setContent} placeholder="Enter your text..." required />
+            <Textarea
+              get={context}
+              set={setContext}
+              placeholder="Enter the context of the story at this point."
+            />
+          </div>
         </div>
         <div className="flex flex-col gap-6 overflow-hidden">
           <div className="grid grid-cols-2 gap-6">
