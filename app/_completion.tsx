@@ -33,7 +33,11 @@ export default function Completion() {
       className="grid h-screen w-screen grid-cols-2 gap-6 p-6"
       onSubmit={async e => {
         e.preventDefault();
-        await complete(content);
+        try {
+          await complete(content);
+        } catch {
+          alert("Request failed. Please try again.");
+        }
       }}
     >
       <div className="grid grid-rows-2 gap-6">
