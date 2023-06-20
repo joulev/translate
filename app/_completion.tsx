@@ -36,7 +36,9 @@ export default function Completion() {
         try {
           await complete(content);
         } catch {
-          alert("Request failed. Please try again.");
+          alert(
+            "Request failed. This can be due to the prompt being too long, or you have been rate limited."
+          );
         }
       }}
     >

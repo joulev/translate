@@ -24,6 +24,7 @@
     "clsx": "^1.2.1",
     "eslint": "8.43.0",
     "eslint-config-next": "13.4.6",
+    "gpt-tokenizer": "^2.1.1",
     "http-status-codes": "^2.2.0",
     "lucide-react": "^0.246.0",
     "next": "13.4.6",

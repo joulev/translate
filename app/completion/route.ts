@@ -1,4 +1,5 @@
 import { OpenAIStream, StreamingTextResponse } from "ai";
+import { isWithinTokenLimit } from "gpt-tokenizer";
 import { Configuration, OpenAIApi } from "openai-edge";
 import { z } from "zod";
 
@@ -56,10 +57,15 @@ ${toLanguage}:
 }
 
 export const POST = withRouteValidation(schema, async (_, { prompt, to, context }) => {
+  const content = buildPrompt(to, prompt, context);
+  if (!env.IS_LOCAL) {
+    // Please don't drain my OpenAI credits.
+    if (!isWithinTokenLimit(content, 1024)) throw new Error("Prompt is too long.");
+  }
   const response = await openai.createChatCompletion({
-    model: "gpt-3.5-turbo-16k",
+    model: env.IS_LOCAL ? "gpt-3.5-turbo-16k" : "gpt-3.5-turbo",
     stream: true,
-    messages: [{ role: "user", content: buildPrompt(to, prompt, context) }],
+    messages: [{ role: "user", content }],
     temperature: 0.4,
     top_p: 1,
     frequency_penalty: 1,
