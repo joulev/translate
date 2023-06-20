@@ -58,12 +58,12 @@ ${toLanguage}:
 
 export const POST = withRouteValidation(schema, async (_, { prompt, to, context }) => {
   const content = buildPrompt(to, prompt, context);
-  if (!env.IS_LOCAL) {
+  if (env.IS_LIMITED) {
     // Please don't drain my OpenAI credits.
     if (!isWithinTokenLimit(content, 1024)) throw new Error("Prompt is too long.");
   }
   const response = await openai.createChatCompletion({
-    model: env.IS_LOCAL ? "gpt-3.5-turbo-16k" : "gpt-3.5-turbo",
+    model: env.IS_LIMITED ? "gpt-3.5-turbo" : "gpt-3.5-turbo-16k",
     stream: true,
     messages: [{ role: "user", content }],
     temperature: 0.4,
