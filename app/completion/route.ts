@@ -12,16 +12,17 @@ const apiConfig = new Configuration({ apiKey: env.OPENAI_API_KEY });
 const openai = new OpenAIApi(apiConfig);
 const schema = z.object({
   prompt: z.string(),
-  from: z.string(),
   to: z.string(),
   context: z.string(),
 });
 
-function buildPrompt(fromLanguage: string, toLanguage: string, text: string, context: string) {
+function buildPrompt(toLanguage: string, text: string, context: string) {
   return `
-You are a light novel translator from ${fromLanguage} to ${toLanguage}.
+You are a light novel translator from an unknown language to ${toLanguage}.
 
-You will be given an excerpt from a light novel in ${fromLanguage} and you will have to translate it into ${toLanguage}.
+You will be given an excerpt from a light novel in the unknown language and you will have to translate it into ${toLanguage}.
+
+If you do not understand the unknown language, reply with the sentence "I do not understand the text" but translated to ${toLanguage}.
 
 Do not translate the text literally. Instead, translate the text in a way that makes sense in ${toLanguage}.
 
@@ -29,11 +30,11 @@ In your reply message, do not add anything other than the translation. Do not ad
 
 DO NOT change the meaning of any part of the text, or omit any part of the text.
 
-DO NOT change any line breaks or paragraph breaks. If the paragraph seems too short and you want to join it with the next paragraph, DO NOT do that. Two paragraphs in ${fromLanguage} MUST be translated to two separate paragraphs in ${toLanguage}.
+DO NOT change any line breaks or paragraph breaks. If the paragraph seems too short and you want to join it with the next paragraph, DO NOT do that. Two paragraphs in the unknown language MUST be translated to two separate paragraphs in ${toLanguage}.
 
 The context of the light novel, before the excerpt, is as follows:
 ================================================
-${context}
+${context || "No context was provided."}
 ================================================
 
 Please follow the context of the light novel when translating.
@@ -42,9 +43,9 @@ In your reply message, do not add anything other than the translation. Do not ad
 
 DO NOT change the meaning of any part of the text, or omit any part of the text.
 
-DO NOT change any line breaks or paragraph breaks. If the paragraph seems too short and you want to join it with the next paragraph, DO NOT do that. Two paragraphs in ${fromLanguage} MUST be translated to two separate paragraphs in ${toLanguage}.
+DO NOT change any line breaks or paragraph breaks. If the paragraph seems too short and you want to join it with the next paragraph, DO NOT do that. Two paragraphs in the unknown language MUST be translated to two separate paragraphs in ${toLanguage}.
 
-${fromLanguage}:
+The unknown language:
 ================================================
 ${text}
 ================================================
@@ -54,11 +55,11 @@ ${toLanguage}:
 `.trim();
 }
 
-export const POST = withRouteValidation(schema, async (_, { prompt, from, to, context }) => {
+export const POST = withRouteValidation(schema, async (_, { prompt, to, context }) => {
   const response = await openai.createChatCompletion({
     model: "gpt-3.5-turbo-16k",
     stream: true,
-    messages: [{ role: "user", content: buildPrompt(from, to, prompt, context) }],
+    messages: [{ role: "user", content: buildPrompt(to, prompt, context) }],
     temperature: 0.4,
     top_p: 1,
     frequency_penalty: 1,

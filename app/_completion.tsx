@@ -8,12 +8,11 @@ import Markdown from "./_markdown";
 
 export default function Completion() {
   const [content, setContent] = useState("");
-  const [from, setFrom] = useState("Japanese");
   const [to, setTo] = useState("English");
   const [context, setContext] = useState("");
   const { complete, completion, isLoading } = useCompletion({
     api: "/completion",
-    body: { from, to, context },
+    body: { to, context },
   });
   const onChangeHandlerGenerator =
     (setter: (value: string) => void) =>
@@ -36,22 +35,13 @@ export default function Completion() {
           value={content}
           onChange={onChangeHandlerGenerator(setContent)}
         />
-        <div className="grid grid-cols-2 gap-6">
-          <input
-            className="border px-6 py-2 outline-none border-daw-main-300 bg-daw-main-50"
-            placeholder="Japanese"
-            type="text"
-            value={from}
-            onChange={onChangeHandlerGenerator(setFrom)}
-          />
-          <input
-            className="border px-6 py-2 outline-none border-daw-main-300 bg-daw-main-50"
-            placeholder="English"
-            type="text"
-            value={to}
-            onChange={onChangeHandlerGenerator(setTo)}
-          />
-        </div>
+        <input
+          className="border px-6 py-2 outline-none border-daw-main-300 bg-daw-main-50"
+          placeholder="English"
+          type="text"
+          value={to}
+          onChange={onChangeHandlerGenerator(setTo)}
+        />
         <textarea
           className="prose prose-zinc w-full max-w-full flex-grow border p-6 outline-none border-daw-main-300 bg-daw-main-50 dark:prose-invert"
           placeholder="Enter context..."
