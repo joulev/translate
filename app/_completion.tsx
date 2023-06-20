@@ -29,44 +29,51 @@ export default function Completion() {
     body: { to, context },
   });
   return (
-    <form
-      className="grid h-screen w-screen grid-cols-2 gap-6 p-6"
-      onSubmit={async e => {
-        e.preventDefault();
-        try {
-          await complete(content);
-        } catch {
-          alert(
-            "Request failed. This can be due to the prompt being too long, or you have been rate limited."
-          );
-        }
-      }}
-    >
-      <div className="grid grid-rows-2 gap-6">
-        <Textarea get={content} set={setContent} placeholder="Enter your text..." required />
-        <Textarea
-          get={context}
-          set={setContext}
-          placeholder="Enter the context of the story at this point."
-        />
+    <>
+      <div className="grid h-screen w-screen place-items-center md:hidden">
+        <p className="px-6 text-center">
+          This app is only meant as an experiment and is not responsive. Please use a wider screen.
+        </p>
       </div>
-      <div className="flex flex-col gap-6 overflow-hidden">
-        <div className="grid grid-cols-2 gap-6">
-          <Select values={allowedLanguages} get={to} set={setTo} displayValue={x => x} />
-          <Button disabled={isLoading}>Translate</Button>
+      <form
+        className="hidden h-screen w-screen grid-cols-2 gap-6 p-6 md:grid"
+        onSubmit={async e => {
+          e.preventDefault();
+          try {
+            await complete(content);
+          } catch {
+            alert(
+              "Request failed. This can be due to the prompt being too long, or you have been rate limited."
+            );
+          }
+        }}
+      >
+        <div className="grid grid-rows-2 gap-6">
+          <Textarea get={content} set={setContent} placeholder="Enter your text..." required />
+          <Textarea
+            get={context}
+            set={setContext}
+            placeholder="Enter the context of the story at this point."
+          />
         </div>
-        <div
-          className={clsx(
-            "group relative flex-grow overflow-hidden border px-6 py-2 border-daw-main-300",
-            isLoading && "cursor-wait select-none"
-          )}
-        >
-          <div className="h-full overflow-y-auto">
-            <Markdown className="prose prose-zinc dark:prose-invert" content={completion} />
+        <div className="flex flex-col gap-6 overflow-hidden">
+          <div className="grid grid-cols-2 gap-6">
+            <Select values={allowedLanguages} get={to} set={setTo} displayValue={x => x} />
+            <Button disabled={isLoading}>Translate</Button>
           </div>
-          {!isLoading && <ShareButton text={completion} />}
+          <div
+            className={clsx(
+              "group relative flex-grow overflow-hidden border px-6 py-2 border-daw-main-300",
+              isLoading && "cursor-wait select-none"
+            )}
+          >
+            <div className="h-full overflow-y-auto">
+              <Markdown className="prose prose-zinc dark:prose-invert" content={completion} />
+            </div>
+            {!isLoading && <ShareButton text={completion} />}
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </>
   );
 }
